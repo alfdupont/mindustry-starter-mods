@@ -1,0 +1,16 @@
+{
+    name: "fixed-toxopid-starter"
+    displayName: "Fixed Toxopid Starter"
+    subtitle: "Toxopid everywhere; builds, mines."
+    author: "alfdupont"
+    repo: "alfdupont/mindustry-starter-mods"
+    description: "All three Serpulo core tiers spawn Toxopid, which gains building at speed 0.5 and mining (tier 1, speed 6.5, 30 held items). Its native leg movement, hovering, weapons, leg splash, health and armor are untouched, and it is not made flying or boosting. Pure script mod: no new content, no UI."
+    version: "1.0.0"
+    # Tested against this repository checkout only (Mindustry source, version 8).
+    # Compatibility with other game versions or platforms is untested.
+    # Minimum accepted build number; not the tested build or a compatibility guarantee.
+    minGameVersion: "146"
+    # Plain script assignments only: no extend()/JavaAdapter,
+    # so this script mod is marked iOS-compatible.
+    iosCompatible: true
+}

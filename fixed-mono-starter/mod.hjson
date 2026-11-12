@@ -1,0 +1,16 @@
+{
+    name: "fixed-mono-starter"
+    displayName: "Fixed Mono Starter"
+    subtitle: "Mono everywhere, Alpha base build."
+    author: "alfdupont"
+    repo: "alfdupont/mindustry-starter-mods"
+    description: "All three Serpulo core tiers spawn Mono, and Mono builds at Alpha's base speed. Pure script mod: no new content, no UI."
+    version: "1.0.0"
+    # Tested against this repository checkout only (Mindustry source, version 8).
+    # Compatibility with other game versions or platforms is untested.
+    # Minimum accepted build number; not the tested build or a compatibility guarantee.
+    minGameVersion: "146"
+    # Plain script assignments only: no extend()/JavaAdapter,
+    # so this script mod is marked iOS-compatible.
+    iosCompatible: true
+}

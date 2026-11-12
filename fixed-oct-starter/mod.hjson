@@ -1,0 +1,16 @@
+{
+    name: "fixed-oct-starter"
+    displayName: "Fixed Oct Starter"
+    subtitle: "Oct everywhere, gains mining."
+    author: "alfdupont"
+    repo: "alfdupont/mindustry-starter-mods"
+    description: "All three Serpulo core tiers spawn Oct, and Oct gains mining (tier 1, speed 6.5, 30 held items). Its native build speed 4.0, shields, repair field, payload capacity and weapons are untouched. Pure script mod: no new content, no UI."
+    version: "1.0.0"
+    # Tested against this repository checkout only (Mindustry source, version 8).
+    # Compatibility with other game versions or platforms is untested.
+    # Minimum accepted build number; not the tested build or a compatibility guarantee.
+    minGameVersion: "146"
+    # Plain script assignments only: no extend()/JavaAdapter,
+    # so this script mod is marked iOS-compatible.
+    iosCompatible: true
+}
