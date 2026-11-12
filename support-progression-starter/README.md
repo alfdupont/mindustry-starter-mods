@@ -10,7 +10,7 @@ A script mod for this Mindustry checkout that makes the starter unit follow the 
 | Foundation | Beta | Poly, native buildSpeed 0.4 retained |
 | Nucleus | Gamma | Mega, native buildSpeed 2.6 retained |
 
-Nothing else is assigned. All three units keep the mining, carry capacity, movement, weapons and abilities this checkout gives them: Mono mines at tier 1 / speed 2.5 and is unarmed, Poly at tier 2 / speed 3.5 with its repair-field ability (5 health, every 480 ticks, range 50) and its mirrored weapon, Mega at tier 3 / speed 4 with armor 3, a 2x2 payload capacity of 256 and its two healing weapons. Native carry capacities also stay as shipped - Mono 20, Poly 30, Mega 60, all derived by the engine from hit size - so the tier 1 / speed 6.5 / capacity 30 normalization used by the other starter variants is deliberately not applied here, because all three units already mine.
+Nothing else is assigned. All three units keep the mining, carry capacity, movement, weapons and abilities this checkout gives them: Mono mines at tier 1 / speed 2.5 and is unarmed, Poly at tier 2 / speed 3.5 with its repair-field ability (5 health, every 480 ticks, range 50) and its mirrored weapon, Mega at tier 3 / speed 4 with armor 3, a 2x2 payload capacity of 256 and its two healing weapons. Native carry capacities also stay as shipped - Mono 20, Poly 30, Mega 60, all derived by the engine from hit size - and no mining or capacity value is assigned to any of them, because all three already mine.
 
 ## Behavior
 

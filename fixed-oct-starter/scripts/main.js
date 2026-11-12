@@ -8,10 +8,11 @@ Blocks.coreShard.unitType = UnitTypes.oct;
 Blocks.coreFoundation.unitType = UnitTypes.oct;
 Blocks.coreNucleus.unitType = UnitTypes.oct;
 
-// Oct cannot mine as shipped (mineTier -1). Give it the shared starter mining baseline: tier 1, speed 6.5.
-UnitTypes.oct.mineTier = 1;
-UnitTypes.oct.mineSpeed = 6.5;
+// Oct cannot mine as shipped (mineTier -1), so it gets mining at tier 3, the highest tier any unit in this content
+// ships with, at a rate just above Mega's native 4 - Oct is what the Mega's support role grows into, and its native
+// buildSpeed 4.0 already beats Mega's 2.6, so building is left exactly as shipped.
+UnitTypes.oct.mineTier = 3;
+UnitTypes.oct.mineSpeed = 4.5;
 
-// Held-resource capacity, normalized to 30 like the other starter variants. Oct's shipped value is derived from
-// its 66 hit size and is 260, so this is a deliberate reduction. payloadCapacity is a separate field and stays native.
-UnitTypes.oct.itemCapacity = 30;
+// itemCapacity is deliberately not assigned: unset means the engine keeps the 260 it derives from the 66 hit size.
+// payloadCapacity is a separate field and was never touched.

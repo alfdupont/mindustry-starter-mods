@@ -8,11 +8,13 @@ Blocks.coreShard.unitType = UnitTypes.crawler;
 Blocks.coreFoundation.unitType = UnitTypes.crawler;
 Blocks.coreNucleus.unitType = UnitTypes.crawler;
 
-// Crawler cannot build or mine as shipped (buildSpeed -1, mineTier -1). Use the shared starter baseline.
+// Crawler cannot build or mine as shipped (buildSpeed -1, mineTier -1). Mining copies Mono, the starter it stands in
+// for: tier 1 at speed 2.5. Building has no native value to copy, since Mono cannot build either, so it stays at 0.5.
 UnitTypes.crawler.buildSpeed = 0.5;
 UnitTypes.crawler.mineTier = 1;
-UnitTypes.crawler.mineSpeed = 6.5;
-UnitTypes.crawler.itemCapacity = 30;
+UnitTypes.crawler.mineSpeed = 2.5;
+
+// itemCapacity is deliberately not assigned: the engine already derives 30 from the 8 pixel hit size.
 
 // The whole trick: with canBoost, the existing recovery in UnitComp.update lifts a unit that is standing on a tile
 // solid to it instead of killing it, so a core-spawned Crawler rises above the core and can fly clear. Nothing here

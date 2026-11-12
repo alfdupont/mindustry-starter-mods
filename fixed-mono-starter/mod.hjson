@@ -5,7 +5,7 @@
     author: "alfdupont"
     repo: "alfdupont/mindustry-starter-mods"
     description: "All three Serpulo core tiers spawn Mono, and Mono builds at Alpha's base speed. Pure script mod: no new content, no UI."
-    version: "1.0.0"
+    version: "1.0.1"
     # Tested against this repository checkout only (Mindustry source, version 8).
     # Compatibility with other game versions or platforms is untested.
     # Minimum accepted build number; not the tested build or a compatibility guarantee.

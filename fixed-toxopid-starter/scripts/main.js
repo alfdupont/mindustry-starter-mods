@@ -11,9 +11,8 @@ Blocks.coreNucleus.unitType = UnitTypes.toxopid;
 // Toxopid cannot build as shipped (buildSpeed -1), so enable it at the shared 0.5 baseline.
 UnitTypes.toxopid.buildSpeed = 0.5;
 
-// It cannot mine as shipped either (mineTier -1). Give it the shared starter mining baseline.
-UnitTypes.toxopid.mineTier = 1;
-UnitTypes.toxopid.mineSpeed = 6.5;
+// It cannot mine as shipped either (mineTier -1), so it copies Mega's mining outright: tier 3 at speed 4.
+UnitTypes.toxopid.mineTier = 3;
+UnitTypes.toxopid.mineSpeed = 4;
 
-// Held-resource capacity, normalized to 30. The shipped value is derived from the 26 hit size and is 100.
-UnitTypes.toxopid.itemCapacity = 30;
+// itemCapacity is deliberately not assigned: unset means the engine keeps the 100 it derives from the 26 hit size.

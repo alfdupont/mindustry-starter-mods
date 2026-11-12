@@ -6,7 +6,7 @@ A minimal script mod for this Mindustry checkout: every Serpulo core tier (Shard
 
 - Shard, Foundation and Nucleus all spawn Poly on every new core and every respawn.
 - Poly's shipped properties are untouched: build speed 0.4, mining tier 2 at mining speed 3.5, movement speed 2.6, health 400, flight, its healing-missile weapon and its repair field ability all stay exactly as this checkout defines them.
-- Its item capacity stays at the shipped 30. Poly leaves `itemCapacity` unset, so `UnitType` derives it from hit size: `(int)(9 * 4)` is 36 and the integer division in `Mathf.round(36, 10)` truncates to 30. That coincidentally equals the capacity the other starter variants are given by rule, so no normalization would be visible either way.
+- Its item capacity stays at the shipped 30. Poly leaves `itemCapacity` unset, so `UnitType` derives it from hit size: `(int)(9 * 4)` is 36 and the integer division in `Mathf.round(36, 10)` truncates to 30. No variant in this set assigns `itemCapacity`, so Poly's hold is vanilla everywhere.
 - Because this mod assigns no shared unit-type property, ordinary factory-built and enemy Polys keep behaving exactly as in the unmodded game. Only the three Serpulo core spawn mappings differ, and those are per-core settings rather than unit stats. This is the one variant of the set that has no type-wide side effect.
 - Core upgrades never transform the unit you control. Standard respawn and core-selection behavior is untouched, including possessing factory units. The unit you get after the next core spawn is Poly at any tier.
 - Erekir cores (Bastion, Citadel, Acropolis) and their native builder units are not touched.

@@ -5,7 +5,7 @@
     author: "alfdupont"
     repo: "alfdupont/mindustry-starter-mods"
     description: "Serpulo cores spawn Mono, Poly and Mega by tier, and Mono gains building at 0.5. The unit you control is never replaced on upgrade - the next core spawn uses the better tier. Pure script mod: no new content, no UI."
-    version: "1.0.0"
+    version: "1.0.1"
     # Tested against this repository checkout only (Mindustry source, version 8, base commit 7e6323c7a4).
     # Compatibility with other game versions or platforms is untested.
     # Minimum accepted build number; not the tested build or a compatibility guarantee.

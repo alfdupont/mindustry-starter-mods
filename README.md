@@ -4,15 +4,17 @@ Six small alternative starter mods for the Serpulo campaign. Each one decides wh
 
 Pick one. They all write the same three core spawn mappings, so if two are enabled they overwrite each other in script load order.
 
+Nothing here assigns an item capacity, so each unit keeps the cargo hold the game derives from its size: Oct 260, Toxopid 100, Crawler 30. Where a unit gains building or mining, the rate is copied from a unit that already has that ability rather than invented: Mega's mining for Toxopid, a shade above Mega for Oct, Mono's for Crawler.
+
 ## Which one
 
 | Mod | Spawned by Shard / Foundation / Nucleus | Unit stats assigned | Watch out for |
 | --- | --- | --- | --- |
 | [fixed-mono-starter](fixed-mono-starter/README.md) | Mono / Mono / Mono | build speed 0.5 | Mono is unarmed; every Mono in the game now builds at 0.5 |
 | [fixed-poly-starter](fixed-poly-starter/README.md) | Poly / Poly / Poly | nothing | The only one with no side effect beyond the core mappings |
-| [fixed-oct-starter](fixed-oct-starter/README.md) | Oct / Oct / Oct | mining tier 1 at speed 6.5, 30 item hold | Every Oct in the game gains that mining setup |
-| [fixed-toxopid-starter](fixed-toxopid-starter/README.md) | Toxopid / Toxopid / Toxopid | build speed 0.5, mining tier 1 at speed 6.5, 30 item hold | Every Toxopid in the game builds and mines |
-| [boosting-crawler-starter](boosting-crawler-starter/README.md) | Crawler / Crawler / Crawler | build speed 0.5, mining tier 1 at speed 6.5, 30 item hold, boost | Crawler keeps its suicide weapon; every Crawler in the game gains all of this |
+| [fixed-oct-starter](fixed-oct-starter/README.md) | Oct / Oct / Oct | mining tier 3 at speed 4.5 | Every Oct in the game mines at tier 3, just above Mega |
+| [fixed-toxopid-starter](fixed-toxopid-starter/README.md) | Toxopid / Toxopid / Toxopid | build speed 0.5, mining tier 3 at speed 4, copied from Mega | Every Toxopid in the game builds and mines like a Mega |
+| [boosting-crawler-starter](boosting-crawler-starter/README.md) | Crawler / Crawler / Crawler | build speed 0.5, mining tier 1 at speed 2.5, copied from Mono, plus boost | Crawler keeps its suicide weapon; every Crawler in the game gains all of this |
 | [support-progression-starter](support-progression-starter/README.md) | Mono / Poly / Mega | build speed 0.5 on Mono | Progression by core tier instead of one unit throughout |
 
 ## Install

@@ -1,15 +1,15 @@
 # Fixed Oct Starter
 
-A minimal script mod for this Mindustry checkout: every Serpulo core tier (Shard, Foundation, Nucleus) spawns Oct instead of its native Alpha/Beta/Gamma, and Oct gains mining, which it does not have as shipped. Its native build speed 4.0 is left exactly as it is. `scripts/main.js` assigns six fields on existing content while the game loads mod scripts, before content initialization. It adds no units, no UI, no update callbacks and no world processors.
+A minimal script mod for this Mindustry checkout: every Serpulo core tier (Shard, Foundation, Nucleus) spawns Oct instead of its native Alpha/Beta/Gamma, and Oct gains mining at the highest tier in the game, which it does not have as shipped. Its native build speed 4.0, already faster than Mega's 2.6, is left exactly as it is. `scripts/main.js` assigns five fields on existing content while the game loads mod scripts, before content initialization. It adds no units, no UI, no update callbacks and no world processors.
 
 ## Behavior
 
 - Shard, Foundation and Nucleus all spawn Oct on every new core and every respawn.
-- Mining is added at the shared starter baseline: `mineTier` 1, `mineSpeed` 6.5 and `itemCapacity` 30. Oct ships with `mineTier` -1, which is why it cannot mine at all without this mod.
-- It carries 30 held items. That is a deliberate normalization, not a preservation: Oct leaves `itemCapacity` unset and the engine derives 260 from its 66 hit size, so 30 is a large reduction. `payloadCapacity` is a separate field and stays native at 1936 (30.25 blocks of payload), so Oct still lifts the same structures and units it always could.
-- Mining tier 1 gates which ore is breakable by `mineTier >= item.hardness`: copper and lead have hardness 1, so this Oct mines them, while coal (2), titanium (3) and thorium (4) need a better tier.
+- Mining is added at `mineTier` 3 and `mineSpeed` 4.5. Oct ships with `mineTier` -1, which is why it cannot mine at all without this mod. Tier 3 is the highest `mineTier` any unit in this content ships with, and 4.5 sits just above Mega's native 4: Oct is where the Mega's support role grows into, so it should not be the weakest miner in the game.
+- Held capacity is not assigned at all. Oct leaves `itemCapacity` unset, so `UnitType.init()` keeps deriving 260 from its 66 hit size and the starter carries the full vanilla hold. `payloadCapacity` is a separate field and stays native at 1936 (30.25 blocks of payload), so Oct still lifts the same structures and units it always could.
+- What a tier unlocks comes from `MinerComp.canMine`, which is `type.mineTier >= item.hardness`: tier 3 covers copper and lead (hardness 1), coal (2) and titanium (3). Thorium (4) and tungsten (5) need a higher tier than any unit in this content has. Harder ore is also slower to break, because the timer is `50 + hardness * 15` ticks of contact divided across `mineSpeed`.
 - Build speed stays 4.0, which is eight times Alpha's 0.5. Movement speed 0.8, health 24000, armor 20, hit size 66, flight, the force-field ability (radius 140, 7000 shield, 8 sides) and the repair field (130 per pulse, range 140) are all untouched. Oct has no weapons, before or after this mod.
-- These three mining fields are properties of the shared Oct unit type, so ordinary factory-built and enemy Octs gain mining and the 30-item capacity too. That is intended and matches how vanilla unit stats work; isolating the change to core-spawned units would need dedicated unit variants.
+- These two mining fields are properties of the shared Oct unit type, so ordinary factory-built and enemy Octs gain the same tier 3 mining at speed 4.5. That is intended and matches how vanilla unit stats work; isolating the change to core-spawned units would need dedicated unit variants.
 - Core upgrades never transform the unit you control. Standard respawn and core-selection behavior is untouched, including possessing factory units. The unit you get after the next core spawn is Oct at any tier.
 - Erekir cores (Bastion, Citadel, Acropolis) and their native builder units are not touched.
 
