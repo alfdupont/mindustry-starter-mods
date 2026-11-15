@@ -1,0 +1,15 @@
+{
+    name: "router-hell"
+    displayName: "Router Hell"
+    subtitle: "Every unit is a router."
+    author: "alfdupont"
+    repo: "alfdupont/mindustry-starter-mods"
+    description: "Every unit is drawn as a router and every unit factory plan costs a router (3 copper) and takes 10 pi seconds. Only T1 units stay in the Serpulo tech tree, reconstructors leave it. Shard spawns Alpha, Foundation spawns Spiroct with Poly's building and mining, Nucleus spawns Vela with Mega's. Unit cap per core: 40, 70, 100. No new content."
+    version: "1.0.0"
+    # Tested headless against a Mindustry source checkout only (version 8, base commit 7e6323c7a4).
+    # The router sprites and the command mode key are client-only and were not exercised by those tests.
+    # Minimum accepted build number; not the tested build or a compatibility guarantee.
+    minGameVersion: "146"
+    # Assignments and Events callbacks only: no extend()/JavaAdapter.
+    iosCompatible: true
+}

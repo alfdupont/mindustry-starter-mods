@@ -1,6 +1,15 @@
 # Mindustry starter mods
 
-Six small alternative starter mods for the Serpulo campaign. Each one decides which unit your core builds you into, and next to nothing else. No new units, no blocks, no sprites, no UI, no per-frame logic: every mod is a handful of assignments applied to stock content while the game loads mod scripts, before content initialization.
+Eight script mods for the Serpulo campaign.
+
+The six **starter mods** each decide which unit your core builds you into, and next to nothing else. No new units, no blocks, no sprites, no UI, no per-frame logic: each is a handful of assignments applied to stock content while the game loads mod scripts, before content initialization. Boosting Crawler also has one callback when the client finishes loading, which keeps command mode on Left Shift.
+
+The two **challenge mods** go further:
+
+- [Router Hell](router-hell/README.md) reshapes the unit game around the router.
+- [Crawlers All The Way Down](crawlers-all-the-way-down/README.md) adds four bigger Crawlers that the reconstructors grow one into the next.
+
+Both change the Serpulo tech tree and use client callbacks. Their READMEs list exactly what they change.
 
 Pick one. They all write the same three core spawn mappings, so if two are enabled they overwrite each other in script load order.
 
@@ -14,8 +23,19 @@ Nothing here assigns an item capacity, so each unit keeps the cargo hold the gam
 | [fixed-poly-starter](fixed-poly-starter/README.md) | Poly / Poly / Poly | nothing | The only one with no side effect beyond the core mappings |
 | [fixed-oct-starter](fixed-oct-starter/README.md) | Oct / Oct / Oct | mining tier 3 at speed 4.5 | Every Oct in the game mines at tier 3, just above Mega |
 | [fixed-toxopid-starter](fixed-toxopid-starter/README.md) | Toxopid / Toxopid / Toxopid | build speed 0.5, mining tier 3 at speed 4, copied from Mega | Every Toxopid in the game builds and mines like a Mega |
-| [boosting-crawler-starter](boosting-crawler-starter/README.md) | Crawler / Crawler / Crawler | build speed 0.5, mining tier 1 at speed 2.5, copied from Mono, plus boost | Crawler keeps its suicide weapon; every Crawler in the game gains all of this |
+| [boosting-crawler-starter](boosting-crawler-starter/README.md) | Crawler / Crawler / Crawler | build speed 0.5, mining tier 1 at speed 2.5, copied from Mono, plus boost | Crawler keeps its suicide weapon; every Crawler in the game gains all of this; Boost moves to Left Alt |
 | [support-progression-starter](support-progression-starter/README.md) | Mono / Poly / Mega | build speed 0.5 on Mono | Progression by core tier instead of one unit throughout |
+
+| Challenge mod | Spawned by Shard / Foundation / Nucleus | What else changes | Watch out for |
+| --- | --- | --- | --- |
+| [router-hell](router-hell/README.md) | Alpha / Spiroct / Vela | Every unit drawn as a router; factory units cost 3 copper and take 10π s; unit cap 40 / 70 / 100; only T1 units and no reconstructors in the tech tree | Spiroct builds and mines like Poly, Vela like Mega, everywhere; Boost moves to Left Alt |
+| [crawlers-all-the-way-down](crawlers-all-the-way-down/README.md) | Crawler / Crawler II / Crawler III | Adds Crawler II to V, grown by the four reconstructors, up to an impact-reactor blast; only the Crawler line, the Ground Factory and the reconstructors in the unit tech tree; crawler factories and Crawlers built on each sector's statistics page | Adds unit types; Crawler II and III explosion values are placeholders; Boost moves to Left Alt |
+
+### Command mode and boosting starters
+
+In the shipped game, Left Shift is both Command Mode and Boost, and the desktop input switches command mode off while the unit you control can boost and those two keys are the same. With a boosting starter (Boosting Crawler, every Crawler of Crawlers All The Way Down, Router Hell's Vela) shift + drag then selected nothing and the command buttons never appeared.
+
+The three mods concerned now move Boost to Left Alt for the session when both bindings are still at their default. Nothing is saved, and a binding you have changed yourself is left alone. Boosting Crawler had this bug up to 1.0.1; it is fixed in 1.0.2.
 
 ## Install
 
@@ -26,7 +46,7 @@ Nothing here assigns an item capacity, so each unit keeps the cargo hold the gam
 
 The mods folder is `mods` inside the game's data directory, which on a default desktop install is `%APPDATA%\Mindustry` on Windows, `~/.local/share/Mindustry` on Linux and `~/Library/Application Support/Mindustry` on macOS. Import Mod avoids having to find it.
 
-Install by file rather than by the in-game GitHub import: that path expects a single mod at the root of a repository, and this repository holds six.
+Install by file rather than by the in-game GitHub import: that path expects a single mod at the root of a repository, and this repository holds eight.
 
 ## Check the download
 
@@ -34,24 +54,26 @@ Put `sha256sums.txt` next to the downloaded ZIPs and run `sha256sum -c sha256sum
 
 ## What these mods do not do
 
-- They leave the Erekir cores and their native builder units alone, so nothing changes on Erekir.
+- They leave the Erekir cores and their native builder units alone, so nothing changes on Erekir, except that Router Hell draws every unit, Erekir's included, as a router.
 - They never transform the unit you are controlling when you upgrade a core. The new mapping is used by the next core spawn, which means a respawn or selecting the core again.
 - They never enable, disable or modify another mod.
-- They do not add content, so removing one returns the core mappings to their defaults on the next core spawn.
+- Apart from Crawlers All The Way Down, they do not add content, so removing one returns the core mappings to their defaults on the next core spawn. Removing Crawlers All The Way Down also removes Crawler II to V from any save that has them.
 
 The stats a mod does assign are properties of a shared unit type, so factory-built, reconstructed and enemy units of that type change too. That is intentional and it is the main reason the variants are separate mods rather than one configurable mod.
 
 ## Compatibility
 
-Verified headless against a Mindustry source checkout (version 8, source base `7e6323c7a4`) with integration tests that load the packaged ZIP through the normal mod and script loader, then check the core mappings and player control, a real copper wall paid for out of core resources, real copper ore mined into the core, upgrades and respawn at both later tiers, save and load, and that the properties the mod does not assign keep their shipped values.
+Verified headless against a Mindustry source checkout (version 8, source base `7e6323c7a4`). The starter mods are covered by integration tests that load the packaged ZIP through the normal mod and script loader, then check the core mappings and player control, a real copper wall paid for out of core resources, real copper ore mined into the core, upgrades and respawn at both later tiers, save and load, and that the properties the mod does not assign keep their shipped values.
 
 `minGameVersion: 146` in each manifest is a loader admission setting, not a tested compatibility claim. The scripts only assign fields that exist in that source, so they should load on build 146 and later, but that combination was not run.
+
+The challenge mods are covered by tests of the same kind, listed in their READMEs. Their client-side parts (router and Crawler sprites, the Boost key, the sector statistics page) were checked by firing the client-load event on a stand-in atlas, not in a running game.
 
 Not tested: multiplayer, mobile devices, the graphics client, a full campaign playthrough. Try a mod on a copied save before committing a sector to it, and expect sectors already captured to keep whatever core tier they have.
 
 ## Layout and rebuilding
 
-Each directory is one mod: `mod.hjson`, `scripts/main.js`, `package.sh` and a README with its exact numbers. Running `./package.sh` inside a mod directory writes `build/<mod>.zip` with sorted entries and fixed timestamps, so a rebuild reproduces the released bytes and its SHA-256.
+Each directory is one mod: `mod.hjson`, `scripts/main.js`, `package.sh` and a README with its exact numbers; Crawlers All The Way Down also has `bundles/` for its English and French text. Running `./package.sh` inside a mod directory writes `build/<mod>.zip` with sorted entries and fixed timestamps, so a rebuild reproduces the released bytes and its SHA-256.
 
 ## License
 

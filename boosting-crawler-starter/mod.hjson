@@ -5,12 +5,12 @@
     author: "alfdupont"
     repo: "alfdupont/mindustry-starter-mods"
     description: "All three Serpulo core tiers spawn Crawler, which gains building at speed 0.5, Mono's mining (tier 1, speed 2.5) and boost, so the existing solid-tile recovery lifts it clear of the core. Its suicide weapon, health, armor and walk are untouched. Pure script mod: no new content, no UI."
-    version: "1.0.1"
+    version: "1.0.2"
     # Tested against this repository checkout only (Mindustry source, version 8).
     # Compatibility with other game versions or platforms is untested.
     # Minimum accepted build number; not the tested build or a compatibility guarantee.
     minGameVersion: "146"
-    # Plain script assignments only: no extend()/JavaAdapter,
+    # Script assignments plus one Events callback; no extend()/JavaAdapter,
     # so this script mod is marked iOS-compatible.
     iosCompatible: true
 }

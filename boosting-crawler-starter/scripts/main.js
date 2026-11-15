@@ -1,6 +1,6 @@
 // Boosting Crawler starter.
 // This body runs once when the game loads mod scripts (Mods.loadScripts), before content initialization.
-// It only assigns fields on existing game content; no callbacks, no new content.
+// It assigns fields on existing game content, plus one ClientLoadEvent callback for the command mode key (see the end).
 // flying is deliberately not set: Crawler stays a ground unit and uses the existing boost to clear solid tiles.
 
 // Serpulo cores (Shard, Foundation, Nucleus) all spawn Crawler. Erekir cores are not touched.
@@ -20,3 +20,16 @@ UnitTypes.crawler.mineSpeed = 2.5;
 // solid to it instead of killing it, so a core-spawned Crawler rises above the core and can fly clear. Nothing here
 // teleports the unit or touches the spawn method, and the suicide weapon with killShooter stays as shipped.
 UnitTypes.crawler.canBoost = true;
+
+// Command mode. DesktopInput.update switches command mode off on every frame in which the player's unit can boost and
+// the Command Mode key is the Boost key, and both ship as Left Shift, so with canBoost above, shift + drag never
+// selects units and the command buttons never appear. When both bindings are still at their shipped default, Boost
+// moves to Left Alt for this session, so shift keeps its usual meaning. Left Alt is otherwise only read together with
+// the select-all keys in command mode. Nothing is written to settings: removing the mod puts Boost back on shift, and
+// a binding the player has changed in Settings > Controls is never touched.
+Events.on(ClientLoadEvent, e => {
+    if(Binding.boost.isDefault() && Binding.commandMode.isDefault() && Binding.boost.value.key == Binding.commandMode.value.key){
+        Binding.boost.value = new KeyBind.Axis(KeyCode.altLeft);
+        Log.info("[boosting-crawler-starter] Boost moved to Left Alt for this session so that Left Shift stays Command Mode.");
+    }
+});

@@ -1,6 +1,6 @@
 # Boosting Crawler Starter
 
-A minimal script mod for this Mindustry checkout: every Serpulo core tier (Shard, Foundation, Nucleus) spawns Crawler, and that Crawler gains building at speed 0.5, Mono's mining at tier 1 speed 2.5, and boost. Its suicide weapon, health, armor, walk and 30-item hold are untouched, and it is not made flying. `scripts/main.js` assigns seven fields on existing content while the game loads mod scripts, before content initialization. It adds no units, no UI, no update callbacks and no world processors.
+A minimal script mod for this Mindustry checkout: every Serpulo core tier (Shard, Foundation, Nucleus) spawns Crawler, and that Crawler gains building at speed 0.5, Mono's mining at tier 1 speed 2.5, and boost. Its suicide weapon, health, armor, walk and 30-item hold are untouched, and it is not made flying. `scripts/main.js` assigns seven fields on existing content while the game loads mod scripts, before content initialization, and registers one callback that runs once when the client has finished loading, to keep Left Shift for command mode (below). It adds no units, no UI, no per-frame callbacks and no world processors.
 
 ## Behavior
 
@@ -11,6 +11,7 @@ A minimal script mod for this Mindustry checkout: every Serpulo core tier (Shard
 - Held capacity is not assigned. The engine already derives 30 for Crawler from its 8 pixel hit size (`UnitType.java:961-962`), so this unit keeps exactly the vanilla hold. It governs less than it looks: a player-controlled unit within `Vars.mineTransferRange` (220 pixels, about 27 tiles) of a core hands each mined item straight to that core instead of storing it, so the held stack only fills farther out or when the core cannot take the item.
 - The suicide weapon is preserved exactly: one weapon, `shootOnDeath` true, bullet `killShooter` true with 80 splash damage in a 44 radius and a 0.68 building damage multiplier. Dying still detonates the Crawler, so suicide attacks and the respawn that follows are part of the run - including next to your own buildings, since the blast damages them. Health 150, armor 0, movement speed 1, hit size 8 and range 40 are unchanged, as are the native rise and descent speeds of 0.08 and the 1.0 boost multiplier.
 - These are properties of the shared Crawler unit type, so every other Crawler in the game - factory-built, reconstructed, or placed by a map or wave - also gets boost, building and Mono-rate mining. That is intended and matches how vanilla unit stats work; isolating the change to core-spawned units would need dedicated unit variants.
+- Command mode works with the default keys. In the shipped game, Left Shift is both Command Mode and Boost, and `DesktopInput.update` switches command mode off on every frame in which the player's unit can boost and those two keys are the same. Without the fix, a boosting Crawler therefore made shift + drag select nothing and the unit command buttons never appeared (fixed in 1.0.2). When the client has loaded and neither binding has been changed from its default, the mod moves Boost to Left Alt for the session, so Left Shift stays Command Mode. Nothing is written to settings, so removing the mod puts Boost back on Left Shift. A binding changed in Settings → Controls is left alone; if you had already rebound one of the two, the mod does nothing. Left Alt is otherwise only read together with the select-all-units keys in command mode. Mobile uses its on-screen command button and is not affected.
 - Core upgrades never transform the unit you control. Standard respawn and core-selection behavior is untouched, including possessing factory units. The unit you get after the next core spawn is Crawler at any tier, and death returns you to another Crawler through the normal respawn path.
 - Erekir cores (Bastion, Citadel, Acropolis) and their native builder units are not touched.
 
@@ -26,7 +27,7 @@ Try it on a copied campaign save rather than a save you care about, for two reas
 
 ## Tested target
 
-Verified only against this repository checkout (Mindustry source version 8, source base `7e6323c7a4` plus the starter-mod work on the `investigate/custom-starter` branch) through the integration test `tests/src/test/java/BoostingCrawlerStarterTests.java`, which loads the packaged ZIP through the normal mod/script loader in a headless profile. The manifest minimum build 146 is a loader admission setting, not a tested compatibility claim. No graphical, mobile, multiplayer or other-game-version testing has been performed.
+Verified only against this repository checkout (Mindustry source version 8, source base `7e6323c7a4` plus the starter-mod work on the `investigate/custom-starter` branch) through the integration test `tests/src/test/java/BoostingCrawlerStarterTests.java`, which loads the packaged ZIP through the normal mod/script loader in a headless profile. The manifest minimum build 146 is a loader admission setting, not a tested compatibility claim. No graphical, mobile, multiplayer or other-game-version testing has been performed; the Boost key callback was checked by firing the client-load event in that headless profile, not in a running client.
 
 ## Test
 
@@ -37,4 +38,4 @@ custom-mods/boosting-crawler-starter/package.sh
 JAVA_HOME=/usr/lib/jvm/java-17-openjdk ./gradlew :tests:test --tests BoostingCrawlerStarterTests --console=plain
 ```
 
-See the [top-level README](../README.md) for the comparison of all six starter variants, install steps and what was verified. Source: [https://github.com/alfdupont/mindustry-starter-mods](https://github.com/alfdupont/mindustry-starter-mods).
+See the [top-level README](../README.md) for the comparison of all the mods, install steps and what was verified. Source: [https://github.com/alfdupont/mindustry-starter-mods](https://github.com/alfdupont/mindustry-starter-mods).

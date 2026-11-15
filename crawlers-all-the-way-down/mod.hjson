@@ -1,0 +1,15 @@
+{
+    name: "crawlers-all-the-way-down"
+    displayName: "Crawlers All The Way Down"
+    subtitle: "Every reconstruction is a bigger Crawler."
+    author: "alfdupont"
+    repo: "alfdupont/mindustry-starter-mods"
+    description: "Crawler is the only unit left in the Serpulo tech tree, along with the Ground Factory and the four reconstructors. Each reconstruction makes a bigger, tougher Crawler, up to Crawler V, whose explosion matches an impact reactor's (Crawler IV: a thorium reactor's). Shard, Foundation and Nucleus spawn Crawler I, II and III. Each sector's statistics page shows its crawler factories and the Crawlers built there."
+    version: "1.0.0"
+    # Tested headless against a Mindustry source checkout only (version 8, base commit 7e6323c7a4).
+    # Sprites, the command mode key and the statistics page are client-only and were not exercised by those tests.
+    # Minimum accepted build number; not the tested build or a compatibility guarantee.
+    minGameVersion: "146"
+    # Assignments and Events callbacks only: no extend()/JavaAdapter.
+    iosCompatible: true
+}
