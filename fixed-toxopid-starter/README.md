@@ -1,16 +1,16 @@
 # Fixed Toxopid Starter
 
-A minimal script mod for this Mindustry checkout: every Serpulo core tier (Shard, Foundation, Nucleus) spawns Toxopid, and Toxopid gains both building and mining, neither of which it has as shipped. Its eight-legged walk, hovering, weapons, leg splash, health and armor stay exactly as they are, and it is deliberately not made flying or boosting. `scripts/main.js` assigns six fields on existing content while the game loads mod scripts, before content initialization. It adds no units, no UI, no update callbacks and no world processors.
+Every Serpulo core tier spawns Toxopid. It can move faster with Boost, build at cannon range, and mine ore through thorium.
 
 ## Behavior
 
 - Shard, Foundation and Nucleus all spawn Toxopid on every new core and every respawn.
-- Building is enabled at `buildSpeed` 0.5. Toxopid ships with `buildSpeed` -1, which is why it cannot construct anything without this mod.
-- Mining copies Mega exactly: `mineTier` 3 and `mineSpeed` 4. Toxopid ships with `mineTier` -1, so it cannot mine without this mod either. What a tier unlocks comes from `MinerComp.canMine`, which is `type.mineTier >= item.hardness`, so this covers copper and lead (1), coal (2) and titanium (3); thorium (4) and tungsten (5) need a higher tier than any unit in this content has.
-- Held capacity is not assigned. Toxopid leaves `itemCapacity` unset, so the engine keeps the 100 it derives from the 26 hit size. Note what that capacity actually governs: a player-controlled unit inside `Vars.mineTransferRange` (220 pixels, about 27 tiles) of a core transfers each mined item straight to that core instead of storing it, so the held stack only fills when the unit mines farther from a core than that, or when the core cannot take the item. The hold is therefore not the limiting factor in the ordinary start-next-to-your-core case.
-- The movement model is untouched: eight legs of length 75, `hovering` true, `groundLayer` the leg-unit layer, movement speed 0.5, hit size 26, `flying` false and `canBoost` false. The integration test ticks a real player-controlled Toxopid standing on the core at all three tiers, because that is the case the leg collision rules have to survive on their own: a unit whose movement model does not accept the tile it stands on is killed inside `UnitComp.update`, and boost is not available here to mask it.
-- Native damage is preserved: leg splash of 80 damage in a 60 range, the mirrored purple shotgun mount and the `toxopid-cannon` artillery with its sap status and frag bullets. Health 22000 and armor 22 are unchanged.
-- `buildSpeed`, `mineTier` and `mineSpeed` are properties of the shared Toxopid unit type, so ordinary factory-built and enemy Toxopids gain building and Mega's mining too. That is intended and matches how vanilla unit stats work; isolating the change to core-spawned units would need dedicated unit variants.
+- Building and mining speeds match Poly on the running game version. The build speed is 0.4 on the Mindustry 8 test checkout and 0.5 on build 146. The mining speed is 3.5 on both.
+- Mining tier 4 covers copper, lead, coal, titanium and thorium. A player-controlled Toxopid transfers mined ore directly to a nearby core that can accept it. Its cargo hold fits 100 items.
+- Build range covers the longest-range weapon once Mindustry initializes it. On both tested builds, Toxopid can build up to 30 tiles away, up from 27.5 tiles.
+- Walking speed is 0.5 world units per tick. At full boost, forward speed reaches 2 world units per tick. Toxopid uses its legged movement rules during a boost, so chasms still block it.
+- With default desktop controls, hold Left Alt to boost. Left Shift still opens Command Mode. The mod applies this for the current session when neither control has been customized.
+- The mod applies these changes to every Toxopid, including factory-built, enemy, and previously saved units.
 - Core upgrades never transform the unit you control. Standard respawn and core-selection behavior is untouched, including possessing factory units. The unit you get after the next core spawn is Toxopid at any tier.
 - Erekir cores (Bastion, Citadel, Acropolis) and their native builder units are not touched.
 
@@ -22,19 +22,10 @@ A minimal script mod for this Mindustry checkout: every Serpulo core tier (Shard
 
 Enable only ONE starter mod at a time. Disable Fixed Mono Starter, Fixed Poly Starter, Fixed Oct Starter and any other starter mod, then restart, before switching; several enabled starter mods would each remap the same cores and their effects could combine in load order. This mod never changes or disables another mod by itself.
 
-Try it on a copied campaign save rather than a save you care about. Toxopid walks at 0.5 pixels per tick and turns at rotateSpeed 1.9, so this is the slowest starter of the set by a wide margin, and it is a large target with 22 armor. Removing the mod returns the core mappings and Toxopid's stats to default.
+Removing the mod returns the core mappings and Toxopid's stats to default.
 
 ## Tested target
 
-Verified only against this repository checkout (Mindustry source version 8, source base `7e6323c7a4` plus the starter-mod work on the `investigate/custom-starter` branch) through the integration test `tests/src/test/java/FixedToxopidStarterTests.java`, which loads the packaged ZIP through the normal mod/script loader in a headless profile. The manifest minimum build 146 is a loader admission setting, not a tested compatibility claim. No graphical, mobile, multiplayer or other-game-version testing has been performed.
-
-## Test
-
-Development checkout only - the Gradle harness is not part of the published archive. The test loads the packaged ZIP through the normal mod and script loader in a disposable headless profile, so it fails if the archive is absent, stale or inert. That headless profile bypasses the manifest version gate (`ModEntry.isSupported()` returns true when headless), so these checks do not exercise `minGameVersion`. From the repository root:
-
-```sh
-custom-mods/fixed-toxopid-starter/package.sh
-JAVA_HOME=/usr/lib/jvm/java-17-openjdk ./gradlew :tests:test --tests FixedToxopidStarterTests --console=plain
-```
+The packaged ZIP passed headless checks on the Mindustry 8 development checkout and build 146. Tests covered building beyond the old reach, mining thorium into the core, and boosting. A keyboard test on build 160.8 confirmed the speed increase and that Toxopid still stops at a chasm while boosting.
 
 See the [top-level README](../README.md) for the comparison of all six starter variants, install steps and what was verified. Source: [https://github.com/alfdupont/mindustry-starter-mods](https://github.com/alfdupont/mindustry-starter-mods).

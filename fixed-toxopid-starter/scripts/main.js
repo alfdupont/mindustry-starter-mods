@@ -1,18 +1,41 @@
 // Fixed Toxopid starter.
-// This body runs once when the game loads mod scripts (Mods.loadScripts), before content initialization.
-// It only assigns fields on existing game content; no callbacks, no new content.
-// canBoost and flying are deliberately not set: Toxopid stands on the core with its native leg collision rules.
+const toxopid = UnitTypes.toxopid;
 
-// Serpulo cores (Shard, Foundation, Nucleus) all spawn Toxopid. Erekir cores are not touched.
-Blocks.coreShard.unitType = UnitTypes.toxopid;
-Blocks.coreFoundation.unitType = UnitTypes.toxopid;
-Blocks.coreNucleus.unitType = UnitTypes.toxopid;
+Blocks.coreShard.unitType = toxopid;
+Blocks.coreFoundation.unitType = toxopid;
+Blocks.coreNucleus.unitType = toxopid;
 
-// Toxopid cannot build as shipped (buildSpeed -1), so enable it at the shared 0.5 baseline.
-UnitTypes.toxopid.buildSpeed = 0.5;
+toxopid.buildSpeed = UnitTypes.poly.buildSpeed;
+toxopid.mineSpeed = UnitTypes.poly.mineSpeed;
+toxopid.mineTier = Items.thorium.hardness;
+toxopid.canBoost = true;
+toxopid.boostMultiplier = 4;
 
-// It cannot mine as shipped either (mineTier -1), so it copies Mega's mining outright: tier 3 at speed 4.
-UnitTypes.toxopid.mineTier = 3;
-UnitTypes.toxopid.mineSpeed = 4;
+// Weapon ranges are available after content initialization.
+Events.on(ContentInitEvent, () => {
+    for (let i = 0; i < toxopid.weapons.size; i++) {
+        toxopid.buildRange = Math.max(toxopid.buildRange, toxopid.weapons.get(i).range());
+    }
+});
 
-// itemCapacity is deliberately not assigned: unset means the engine keeps the 100 it derives from the 26 hit size.
+// Desktop command mode is disabled for boost-capable units when the two bindings match.
+Events.on(ClientLoadEvent, () => {
+    if (Vars.mobile) return;
+
+    if ("commandMode" in Binding) {
+        if (Binding.boost.isDefault() && Binding.commandMode.isDefault() && Binding.boost.value.key === Binding.commandMode.value.key) {
+            Binding.boost.value = new KeyBind.Axis(KeyCode.altLeft);
+        }
+    } else {
+        // Older builds store the effective bindings in Core.keybinds.
+        const keybinds = Core.keybinds;
+        const section = keybinds.getSections()[0];
+        const overrides = section.binds.get(section.device.type());
+        const boost = keybinds.get(Binding.boost);
+        const commandMode = keybinds.get(Binding.command_mode);
+        if ((overrides == null || (!overrides.containsKey(Binding.boost) && !overrides.containsKey(Binding.command_mode))) &&
+            boost.key === KeyCode.shiftLeft && commandMode.key === KeyCode.shiftLeft) {
+            boost.key = KeyCode.altLeft;
+        }
+    }
+});

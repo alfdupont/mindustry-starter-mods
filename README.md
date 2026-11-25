@@ -2,7 +2,7 @@
 
 Eight script mods for the Serpulo campaign.
 
-The six **starter mods** each decide which unit your core builds you into, and next to nothing else. No new units, no blocks, no sprites, no UI, no per-frame logic: each is a handful of assignments applied to stock content while the game loads mod scripts, before content initialization. Boosting Crawler also has one callback when the client finishes loading, which keeps command mode on Left Shift.
+The six **starter mods** set which unit your core spawns and, in some cases, adjust that unit's stats. They use the existing units and blocks. Boosting Crawler and Fixed Toxopid adjust the default desktop boost key once when the client finishes loading. Fixed Toxopid sets its build reach once weapon ranges are initialized.
 
 The two **challenge mods** go further:
 
@@ -13,7 +13,7 @@ Both change the Serpulo tech tree and use client callbacks. Their READMEs list e
 
 Pick one. They all write the same three core spawn mappings, so if two are enabled they overwrite each other in script load order.
 
-Nothing here assigns an item capacity, so each unit keeps the cargo hold the game derives from its size: Oct 260, Toxopid 100, Crawler 30. Where a unit gains building or mining, the rate is copied from a unit that already has that ability rather than invented: Mega's mining for Toxopid, a shade above Mega for Oct, Mono's for Crawler.
+Each starter keeps its native cargo hold. Oct carries 260 items, Toxopid 100 and Crawler 30.
 
 ## Which one
 
@@ -22,7 +22,7 @@ Nothing here assigns an item capacity, so each unit keeps the cargo hold the gam
 | [fixed-mono-starter](fixed-mono-starter/README.md) | Mono / Mono / Mono | build speed 0.5 | Mono is unarmed; every Mono in the game now builds at 0.5 |
 | [fixed-poly-starter](fixed-poly-starter/README.md) | Poly / Poly / Poly | nothing | The only one with no side effect beyond the core mappings |
 | [fixed-oct-starter](fixed-oct-starter/README.md) | Oct / Oct / Oct | mining tier 3 at speed 4.5 | Every Oct in the game mines at tier 3, just above Mega |
-| [fixed-toxopid-starter](fixed-toxopid-starter/README.md) | Toxopid / Toxopid / Toxopid | build speed 0.5, mining tier 3 at speed 4, copied from Mega | Every Toxopid in the game builds and mines like a Mega |
+| [fixed-toxopid-starter](fixed-toxopid-starter/README.md) | Toxopid / Toxopid / Toxopid | Poly's building and mining speeds, thorium mining, 30-tile build reach, 4× forward speed on Boost | Changes every Toxopid. Default desktop Boost moves to Left Alt |
 | [boosting-crawler-starter](boosting-crawler-starter/README.md) | Crawler / Crawler / Crawler | build speed 0.5, mining tier 1 at speed 2.5, copied from Mono, plus boost | Crawler keeps its suicide weapon; every Crawler in the game gains all of this; Boost moves to Left Alt |
 | [support-progression-starter](support-progression-starter/README.md) | Mono / Poly / Mega | build speed 0.5 on Mono | Progression by core tier instead of one unit throughout |
 
@@ -33,9 +33,9 @@ Nothing here assigns an item capacity, so each unit keeps the cargo hold the gam
 
 ### Command mode and boosting starters
 
-In the shipped game, Left Shift is both Command Mode and Boost, and the desktop input switches command mode off while the unit you control can boost and those two keys are the same. With a boosting starter (Boosting Crawler, every Crawler of Crawlers All The Way Down, Router Hell's Vela) shift + drag then selected nothing and the command buttons never appeared.
+Mindustry defaults to Left Shift for both Command Mode and Boost. On desktop, that shared binding disables command mode while you control a unit that can boost.
 
-The three mods concerned now move Boost to Left Alt for the session when both bindings are still at their default. Nothing is saved, and a binding you have changed yourself is left alone. Boosting Crawler had this bug up to 1.0.1; it is fixed in 1.0.2.
+Fixed Toxopid Starter, Boosting Crawler Starter, Crawlers All The Way Down and Router Hell move Boost to Left Alt for the session when both bindings use their defaults. Custom bindings remain in effect.
 
 ## Install
 
@@ -65,11 +65,11 @@ The stats a mod does assign are properties of a shared unit type, so factory-bui
 
 Verified headless against a Mindustry source checkout (version 8, source base `7e6323c7a4`). The starter mods are covered by integration tests that load the packaged ZIP through the normal mod and script loader, then check the core mappings and player control, a real copper wall paid for out of core resources, real copper ore mined into the core, upgrades and respawn at both later tiers, save and load, and that the properties the mod does not assign keep their shipped values.
 
-`minGameVersion: 146` in each manifest is a loader admission setting, not a tested compatibility claim. The scripts only assign fields that exist in that source, so they should load on build 146 and later, but that combination was not run.
+`minGameVersion: 146` sets the minimum build accepted by the loader. Fixed Toxopid Starter also passed headless checks on build 146 and a desktop Boost key test on build 160.8.
 
 The challenge mods are covered by tests of the same kind, listed in their READMEs. Their client-side parts (router and Crawler sprites, the Boost key, the sector statistics page) were checked by firing the client-load event on a stand-in atlas, not in a running game.
 
-Not tested: multiplayer, mobile devices, the graphics client, a full campaign playthrough. Try a mod on a copied save before committing a sector to it, and expect sectors already captured to keep whatever core tier they have.
+Multiplayer, mobile devices and a full campaign playthrough are untested. Try a mod on a copied save before committing a sector to it, and expect sectors already captured to keep whatever core tier they have.
 
 ## Layout and rebuilding
 
